@@ -1,0 +1,60 @@
+{
+  "model_name": "Logistic Regression",
+  "features": [
+    "Contract",
+    "tenure",
+    "OnlineSecurity",
+    "TechSupport",
+    "InternetService",
+    "OnlineBackup",
+    "PaymentMethod",
+    "DeviceProtection"
+  ],
+  "numeric": {
+    "tenure": {
+      "min": 0.0,
+      "max": 72.0
+    }
+  },
+  "categorical": {
+    "Contract": [
+      "Month-to-month",
+      "One year",
+      "Two year"
+    ],
+    "OnlineSecurity": [
+      "No",
+      "No internet service",
+      "Yes"
+    ],
+    "TechSupport": [
+      "No",
+      "No internet service",
+      "Yes"
+    ],
+    "InternetService": [
+      "DSL",
+      "Fiber optic",
+      "No"
+    ],
+    "OnlineBackup": [
+      "No",
+      "No internet service",
+      "Yes"
+    ],
+    "PaymentMethod": [
+      "Bank transfer (automatic)",
+      "Credit card (automatic)",
+      "Electronic check",
+      "Mailed check"
+    ],
+    "DeviceProtection": [
+      "No",
+      "No internet service",
+      "Yes"
+    ]
+  },
+  "cv_roc_auc": 0.84,
+  "test_roc_auc": 0.834,
+  "n_rows": 7043
+}

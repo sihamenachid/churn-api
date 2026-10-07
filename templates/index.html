@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Churn prediction</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <main class="card">
+    <h1>Churn prediction</h1>
+    <p class="sub">Will this customer cancel their subscription?</p>
+
+    <form action="/predict" method="post">
+      {% for group_name, fields in groups %}
+        {% for f in fields %}
+        <div class="field">
+          <label for="{{ f }}">{{ labels[f] }}</label>
+          {% if f in numeric %}
+            <input type="number" id="{{ f }}" name="{{ f }}" min="0" max="{{ numeric[f].max|int }}"
+                   value="{{ values[f] }}" placeholder="0 to {{ numeric[f].max|int }}" required>
+          {% else %}
+            <select id="{{ f }}" name="{{ f }}">
+              {% for opt in categorical[f] if opt != 'No internet service' %}
+              <option value="{{ opt }}" {% if values[f] == opt %}selected{% endif %}>{{ opt }}</option>
+              {% endfor %}
+            </select>
+          {% endif %}
+          {% if errors.get(f) %}<p class="error">{{ errors[f] }}</p>{% endif %}
+        </div>
+        {% endfor %}
+      {% endfor %}
+
+      <button type="submit">Predict</button>
+    </form>
+
+    {% if result %}
+    <div class="result {{ 'churn' if result.churn else 'stay' }}">
+      <strong>{{ 'Likely to churn' if result.churn else 'Likely to stay' }}</strong>
+      <span>Churn probability: {{ result.probability }}%</span>
+    </div>
+    {% endif %}
+
+  </main>
+</body>
+</html>
